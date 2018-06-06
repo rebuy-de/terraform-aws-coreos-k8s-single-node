@@ -1,0 +1,4 @@
+[Mount]
+What=/dev/xvdg
+Where=/mnt/shared
+Type=ext4
