@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: kube-apiserver
+  namespace: kube-system
+
+spec:
+  hostNetwork: true
+  containers:
+  - name: kube-apiserver
+    image: quay.io/coreos/hyperkube:v1.10.2_coreos.0
+    command:
+    - /hyperkube
+    - apiserver
+    - --etcd-servers=http://localhost:2379
+    - --cloud-provider=aws
+    - --service-cluster-ip-range=10.11.0.0/16
+    - --authorization-mode=RBAC
+    - --token-auth-file=/etc/kubernetes/tokens.csv
+    - --service-account-key-file=/etc/kubernetes/serviceaccount.pem
+    - --tls-cert-file=/etc/kubernetes/ssl/apiserver-cert.pem
+    - --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem
+    - --kubelet-certificate-authority=/etc/kubernetes/ssl/root-ca.pem
+
+    ports:
+    - containerPort: 8080
+      hostPort: 8080
+      name: local
+
+    volumeMounts:
+    - mountPath: /etc/kubernetes
+      name: config
+      readOnly: true
+
+  volumes:
+  - name: config
+    hostPath:
+      path: /etc/kubernetes

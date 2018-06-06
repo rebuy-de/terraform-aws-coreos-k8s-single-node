@@ -1,0 +1,4 @@
+[Mount]
+What=/dev/xvdf
+Where=/var/lib/etcd
+Type=ext4
