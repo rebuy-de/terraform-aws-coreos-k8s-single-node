@@ -10,15 +10,17 @@ locals {
   ]
 }
 
+data "aws_caller_identity" "current" {}
+
 data "ignition_config" "user_data" {
   append {
-    source       = "s3://rebuy-terraform-state-138758637120/userdata.json"
+    source       = "s3://rebuy-terraform-state-${data.aws_caller_identity.current.account_id}/userdata.json"
     verification = "sha512-${sha512(data.ignition_config.s3.rendered)}"
   }
 }
 
 resource "aws_s3_bucket_object" "user_data" {
-  bucket = "rebuy-terraform-state-138758637120"
+  bucket = "rebuy-terraform-state-${data.aws_caller_identity.current.account_id}"
   key    = "userdata.json"
 
   content = "${data.ignition_config.s3.rendered}"
