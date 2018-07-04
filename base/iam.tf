@@ -86,7 +86,7 @@ data "aws_iam_policy_document" "ignition_access" {
     ]
 
     "resources" = [
-      "arn:aws:s3:::rebuy-terraform-state-${data.aws_caller_identity.current.account_id}/*",
+      "arn:aws:s3:::rebuy-single-node-ignition-${data.aws_caller_identity.current.account_id}/*",
     ]
   }
 
