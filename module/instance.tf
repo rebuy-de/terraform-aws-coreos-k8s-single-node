@@ -24,11 +24,11 @@ resource "aws_instance" "main" {
   associate_public_ip_address = true
   key_name                    = "${var.key_name}"
   user_data                   = "${data.ignition_config.user_data.rendered}"
-  subnet_id                   = "${var.subnet_id}"
-  iam_instance_profile        = "${var.instance_profile}"
+  subnet_id                   = "${aws_subnet.public.id}"
+  iam_instance_profile        = "${aws_iam_instance_profile.node.id}"
 
   vpc_security_group_ids = [
-    "${var.security_group_id}",
+    "${aws_security_group.main.id}",
     "${var.additional_security_group_ids}",
   ]
 

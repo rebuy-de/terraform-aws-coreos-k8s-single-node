@@ -10,8 +10,6 @@ locals {
   ]
 }
 
-data "aws_caller_identity" "current" {}
-
 data "ignition_config" "user_data" {
   append {
     source       = "s3://rebuy-single-node-ignition-${data.aws_caller_identity.current.account_id}/userdata.json"
