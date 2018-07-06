@@ -19,18 +19,18 @@ data "aws_ami" "coreos" {
 }
 
 resource "aws_instance" "main" {
-  ami           = "${data.aws_ami.coreos.id}"
-  instance_type = "t2.medium"
-
+  ami                         = "${data.aws_ami.coreos.id}"
+  instance_type               = "t2.medium"
   associate_public_ip_address = true
+  key_name                    = "${var.key_name}"
+  user_data                   = "${data.ignition_config.user_data.rendered}"
+  subnet_id                   = "${var.subnet_id}"
+  iam_instance_profile        = "${var.instance_profile}"
 
-  key_name = "${var.key_name}"
-
-  user_data              = "${data.ignition_config.user_data.rendered}"
-  vpc_security_group_ids = ["${var.security_group_id}"]
-  subnet_id              = "${var.subnet_id}"
-
-  iam_instance_profile = "${var.instance_profile}"
+  vpc_security_group_ids = [
+    "${var.security_group_id}",
+    "${var.additional_security_group_id}",
+  ]
 
   tags {
     Name                         = "Kubernetes"
