@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: traefik-ingress-controller
+  namespace: default
+  labels:
+    k8s-app: traefik-ingress-lb
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: traefik-ingress-lb
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb
+        name: traefik-ingress-lb
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+
+      containers:
+      - image: traefik:1.6
+        name: traefik-ingress-lb
+
+        args:
+        - --configfile=/config/traefik.toml
+        ports:
+        - name: http
+          containerPort: 80
+          hostPort: 80
+        - name: https
+          containerPort: 443
+          hostPort: 443
+        - name: admin
+          containerPort: 8080
+
+        volumeMounts:
+        - mountPath: /mnt/shared/traefik
+          name: persistent
+        - mountPath: /config
+          name: config
+
+      volumes:
+      - name: persistent
+        hostPath:
+          path: /mnt/shared/traefik
+      - name: config
+        configMap:
+          name: traefik-config
