@@ -15,7 +15,7 @@ ExecStart=/usr/lib/coreos/kubelet-wrapper \
   --kubeconfig=/etc/kubernetes/kubeconfig.yaml \
   --tls-cert-file=/etc/kubernetes/ssl/kubelet-cert.pem \
   --tls-private-key-file=/etc/kubernetes/ssl/kubelet-key.pem \
-  --cluster-dns=10.11.11.11 \
+  --cluster-dns=10.32.0.10 \
   --cloud-provider=aws \
   --register-node
 ExecStop=/opt/bin/stop-kubelet
