@@ -3,7 +3,7 @@ variable "key_name" {
 }
 
 variable "additional_security_group_ids" {
-  type = "list"
+  default = []
 }
 
 variable "instance_type" {
