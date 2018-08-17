@@ -31,10 +31,7 @@ resource "aws_instance" "main" {
     volume_size = "${var.root_block_device_size}"
   }
 
-  vpc_security_group_ids = [
-    "${aws_security_group.main.id}",
-    "${var.additional_security_group_ids}",
-  ]
+  vpc_security_group_ids = ["${aws_security_group.main.id}"]
 
   tags {
     Name                         = "Kubernetes"
