@@ -2,10 +2,6 @@ variable "key_name" {
   type = "string"
 }
 
-variable "additional_security_group_ids" {
-  default = []
-}
-
 variable "instance_type" {
   default = "t2.micro"
 }
