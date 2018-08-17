@@ -1,5 +1,6 @@
 output "ip" {
-  value = "${aws_eip.main.public_ip}"
+  description = "IP address for the EC2 instance. Connect via SSH with `ssh core@<IP>`"
+  value       = "${aws_eip.main.public_ip}"
 }
 
 data "template_file" "kubeconfig_remote" {
@@ -12,17 +13,21 @@ data "template_file" "kubeconfig_remote" {
 }
 
 output "kubeconfig_admin" {
-  value = "${data.template_file.kubeconfig_remote.rendered}"
+  description = "Kubernetes config for the cluster administrator. Extract it with `terraform output kubeconfig_admin > ~/.kube/config-single-node`"
+  value       = "${data.template_file.kubeconfig_remote.rendered}"
 }
 
-output "instance" {
-  value = "${aws_instance.main.id}"
+output "instance_id" {
+  description = "ID of the EC2 instance"
+  value       = "${aws_instance.main.id}"
 }
 
 output "vpc_id" {
-  value = "${aws_vpc.main.id}"
+  description = "ID of the VPC Network"
+  value       = "${aws_vpc.main.id}"
 }
 
 output "security_group_id" {
-  value = "${aws_security_group.main.id}"
+  description = "ID of the Security Group of the EC2 instance. Add additional rules with `aws_security_group_rule`"
+  value       = "${aws_security_group.main.id}"
 }
