@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 data "aws_ami" "coreos" {
   owners      = ["595879546273"]
   most_recent = true

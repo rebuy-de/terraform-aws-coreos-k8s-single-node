@@ -31,10 +31,10 @@ resource "tls_cert_request" "kubelet" {
   }
 
   dns_names = [
-    "*.eu-west-1.compute.internal",
+    "*.${data.aws_region.current.name}.compute.internal",
   ]
 
-  ip_addresses = ["10.11.0.1"]
+  ip_addresses = ["10.32.0.1"]
 }
 
 resource "tls_locally_signed_cert" "kubelet" {
