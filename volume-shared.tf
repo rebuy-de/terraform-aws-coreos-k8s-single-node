@@ -14,7 +14,7 @@ resource "aws_volume_attachment" "shared" {
 }
 
 resource "aws_ebs_volume" "shared" {
-  availability_zone = "eu-west-1a"
+  availability_zone = "${data.aws_region.current.name}a"
   size              = 1
   type              = "gp2"
 

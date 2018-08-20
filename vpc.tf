@@ -14,7 +14,7 @@ resource "aws_internet_gateway" "main" {
 
 resource "aws_subnet" "public" {
   vpc_id            = "${aws_vpc.main.id}"
-  availability_zone = "eu-west-1a"
+  availability_zone = "${data.aws_region.current.name}a"
   cidr_block        = "172.27.1.0/24"
 
   tags {

@@ -14,7 +14,7 @@ resource "aws_volume_attachment" "etcd" {
 }
 
 resource "aws_ebs_volume" "etcd" {
-  availability_zone = "eu-west-1a"
+  availability_zone = "${data.aws_region.current.name}a"
   size              = 1
   type              = "gp2"
 
