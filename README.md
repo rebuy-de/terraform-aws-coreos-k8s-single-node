@@ -1,6 +1,17 @@
 # terraform-aws-coreos-k8s-single-node
 
+[![License](https://img.shields.io/github/license/rebuy-de/terraform-aws-coreos-k8s-single-node.svg)]()
+
 Single node Kubernetes cluster on CoreOS made with Terraform.
+
+> **Development Status** *terraform-aws-coreos-k8s-single-node* is in an early development phase. Expect
+> breaking changes any time.
+
+
+## Use Cases
+
+* It can be used as a very cheap Kubernetes cluster, which might be used for sandbox/staging environments.
+* It can be used for non-critical workloads, which need AWS Account isolation.
 
 ## Usage
 
