@@ -10,7 +10,7 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-apiserver
-    image: quay.io/coreos/hyperkube:v1.10.2_coreos.0
+    image: quay.io/coreos/hyperkube:v1.10.11_coreos.0
     command:
     - /hyperkube
     - apiserver
