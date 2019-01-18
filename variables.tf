@@ -1,6 +1,6 @@
-variable "key_name" {
-  description = "Name of the AWS Key Pair, that is used for the EC2 instance. Can be created with `aws_key_pair`"
-  type        = "string"
+variable "keys" {
+  description = "List of authorized ssh public keys."
+  type        = "list"
 }
 
 variable "instance_type" {

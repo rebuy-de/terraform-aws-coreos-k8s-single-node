@@ -24,7 +24,6 @@ resource "aws_instance" "main" {
   ami                         = "${data.aws_ami.coreos.id}"
   instance_type               = "${var.instance_type}"
   associate_public_ip_address = true
-  key_name                    = "${var.key_name}"
   user_data                   = "${data.ignition_config.user_data.rendered}"
   subnet_id                   = "${aws_subnet.public.id}"
   iam_instance_profile        = "${aws_iam_instance_profile.node.id}"

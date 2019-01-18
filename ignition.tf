@@ -57,6 +57,15 @@ data "ignition_config" "s3" {
     "${data.ignition_filesystem.etcd.id}",
     "${data.ignition_filesystem.shared.id}",
   ]
+
+  users = [
+    "${data.ignition_user.default.id}",
+  ]
+}
+
+data "ignition_user" "default" {
+  name                = "core"
+  ssh_authorized_keys = ["${var.keys}"]
 }
 
 data "ignition_file" "files" {
