@@ -7,13 +7,15 @@ metadata:
 
 spec:
   hostNetwork: true
+  priorityClassName: system-cluster-critical
+
   containers:
   - name: kube-controller-manager
-    image: gcr.io/google-containers/hyperkube-amd64:v1.11.8
+    image: gcr.io/google-containers/hyperkube-amd64:v1.15.3
 
     command:
     - /hyperkube
-    - controller-manager
+    - kube-controller-manager
     - --cloud-provider=aws
     - --kubeconfig=/etc/kubernetes/kubeconfig.yaml
     - --service-account-private-key-file=/etc/kubernetes/serviceaccount.pem
