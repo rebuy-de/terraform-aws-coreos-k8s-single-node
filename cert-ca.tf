@@ -5,7 +5,7 @@ resource "tls_private_key" "root" {
 
 resource "tls_self_signed_cert" "root" {
   key_algorithm   = "ECDSA"
-  private_key_pem = "${tls_private_key.root.private_key_pem}"
+  private_key_pem = tls_private_key.root.private_key_pem
 
   validity_period_hours = 26280
   early_renewal_hours   = 8760
@@ -21,10 +21,11 @@ resource "tls_self_signed_cert" "root" {
 
 data "ignition_file" "root_ca" {
   path       = "/etc/kubernetes/ssl/root-ca.pem"
-  mode       = 0644
+  mode       = 420
   filesystem = "root"
 
   content {
-    content = "${tls_self_signed_cert.root.cert_pem}"
+    content = tls_self_signed_cert.root.cert_pem
   }
 }
+

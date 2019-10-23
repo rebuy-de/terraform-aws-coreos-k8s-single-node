@@ -8,8 +8,8 @@ data "ignition_filesystem" "etcd" {
 
 resource "aws_volume_attachment" "etcd" {
   device_name  = "/dev/xvdf"
-  volume_id    = "${aws_ebs_volume.etcd.id}"
-  instance_id  = "${aws_instance.main.id}"
+  volume_id    = aws_ebs_volume.etcd.id
+  instance_id  = aws_instance.main.id
   skip_destroy = true
 }
 
@@ -18,7 +18,8 @@ resource "aws_ebs_volume" "etcd" {
   size              = 1
   type              = "gp2"
 
-  tags {
+  tags = {
     Name = "Kubernetes etcd"
   }
 }
+

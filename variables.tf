@@ -1,6 +1,6 @@
 variable "keys" {
   description = "List of authorized ssh public keys."
-  type        = "list"
+  type        = list(string)
 }
 
 variable "instance_type" {
@@ -12,3 +12,4 @@ variable "root_block_device_size" {
   description = "Size of the root volume of the EC2 instance."
   default     = "8"
 }
+

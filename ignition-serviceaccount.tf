@@ -4,10 +4,11 @@ resource "tls_private_key" "serviceaccount" {
 
 data "ignition_file" "serviceaccount" {
   path       = "/etc/kubernetes/serviceaccount.pem"
-  mode       = 0644
+  mode       = 420
   filesystem = "root"
 
   content {
-    content = "${tls_private_key.serviceaccount.private_key_pem}"
+    content = tls_private_key.serviceaccount.private_key_pem
   }
 }
+
