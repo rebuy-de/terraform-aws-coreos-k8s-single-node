@@ -1,4 +1,5 @@
-data "aws_region" "current" {}
+data "aws_region" "current" {
+}
 
 data "aws_ami" "coreos" {
   owners      = ["595879546273"]
@@ -21,34 +22,35 @@ data "aws_ami" "coreos" {
 }
 
 resource "aws_instance" "main" {
-  ami                         = "${data.aws_ami.coreos.id}"
-  instance_type               = "${var.instance_type}"
+  ami                         = data.aws_ami.coreos.id
+  instance_type               = var.instance_type
   associate_public_ip_address = true
-  user_data                   = "${data.ignition_config.user_data.rendered}"
-  subnet_id                   = "${aws_subnet.public.id}"
-  iam_instance_profile        = "${aws_iam_instance_profile.node.id}"
+  user_data                   = data.ignition_config.user_data.rendered
+  subnet_id                   = aws_subnet.public.id
+  iam_instance_profile        = aws_iam_instance_profile.node.id
 
   root_block_device {
-    volume_size = "${var.root_block_device_size}"
+    volume_size = var.root_block_device_size
   }
 
-  vpc_security_group_ids = ["${aws_security_group.main.id}"]
+  vpc_security_group_ids = [aws_security_group.main.id]
 
-  tags {
+  tags = {
     Name                         = "Kubernetes"
     "kubernetes.io/cluster/blub" = "owned"
   }
 
   lifecycle {
-    ignore_changes = ["ami"]
+    ignore_changes = [ami]
   }
 }
 
 resource "aws_eip" "main" {
-  instance = "${aws_instance.main.id}"
+  instance = aws_instance.main.id
   vpc      = true
 
-  tags {
+  tags = {
     Name = "Kubernetes"
   }
 }
+

@@ -8,8 +8,8 @@ data "ignition_filesystem" "shared" {
 
 resource "aws_volume_attachment" "shared" {
   device_name  = "/dev/xvdg"
-  volume_id    = "${aws_ebs_volume.shared.id}"
-  instance_id  = "${aws_instance.main.id}"
+  volume_id    = aws_ebs_volume.shared.id
+  instance_id  = aws_instance.main.id
   skip_destroy = true
 }
 
@@ -18,7 +18,8 @@ resource "aws_ebs_volume" "shared" {
   size              = 1
   type              = "gp2"
 
-  tags {
+  tags = {
     Name = "Kubernetes Shared"
   }
 }
+
