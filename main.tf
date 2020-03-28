@@ -2,12 +2,12 @@ data "aws_region" "current" {
 }
 
 data "aws_ami" "coreos" {
-  owners      = ["595879546273"]
+  owners      = ["075585003325"]
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["CoreOS-stable-*"]
+    values = ["Flatcar-stable-*"]
   }
 
   filter {
@@ -39,10 +39,6 @@ resource "aws_instance" "main" {
     Name                         = "Kubernetes"
     "kubernetes.io/cluster/blub" = "owned"
   }
-
-  lifecycle {
-    ignore_changes = [ami]
-  }
 }
 
 resource "aws_eip" "main" {
@@ -53,4 +49,3 @@ resource "aws_eip" "main" {
     Name = "Kubernetes"
   }
 }
-
