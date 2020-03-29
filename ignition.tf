@@ -32,36 +32,34 @@ resource "aws_s3_bucket" "user_data" {
 }
 
 data "ignition_config" "s3" {
-  files = [
-    concat(
-      data.ignition_file.files.*.id,
-      [data.ignition_file.auth_tokens.id],
-      [data.ignition_file.serviceaccount.id],
-      [
-        data.ignition_file.root_ca.id,
-        data.ignition_file.apiserver_cert.id,
-        data.ignition_file.apiserver_key.id,
-        data.ignition_file.kubelet_cert.id,
-        data.ignition_file.kubelet_key.id,
-      ],
-    ),
-  ]
+  files = concat(
+    data.ignition_file.files.*.rendered,
+    [data.ignition_file.auth_tokens.rendered],
+    [data.ignition_file.serviceaccount.rendered],
+    [
+      data.ignition_file.root_ca.rendered,
+      data.ignition_file.apiserver_cert.rendered,
+      data.ignition_file.apiserver_key.rendered,
+      data.ignition_file.kubelet_cert.rendered,
+      data.ignition_file.kubelet_key.rendered,
+    ],
+  )
 
   systemd = [
-    data.ignition_systemd_unit.etcd.id,
-    data.ignition_systemd_unit.kubelet.id,
-    data.ignition_systemd_unit.etcd_mount.id,
-    data.ignition_systemd_unit.shared_mount.id,
-    data.ignition_systemd_unit.sethostname.id,
+    data.ignition_systemd_unit.etcd.rendered,
+    data.ignition_systemd_unit.kubelet.rendered,
+    data.ignition_systemd_unit.etcd_mount.rendered,
+    data.ignition_systemd_unit.shared_mount.rendered,
+    data.ignition_systemd_unit.sethostname.rendered,
   ]
 
   filesystems = [
-    data.ignition_filesystem.etcd.id,
-    data.ignition_filesystem.shared.id,
+    data.ignition_filesystem.etcd.rendered,
+    data.ignition_filesystem.shared.rendered,
   ]
 
   users = [
-    data.ignition_user.default.id,
+    data.ignition_user.default.rendered,
   ]
 }
 
@@ -110,4 +108,3 @@ data "ignition_systemd_unit" "sethostname" {
   name    = "sethostname.service"
   content = file("${path.module}/systemd/sethostname.service")
 }
-
